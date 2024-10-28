@@ -1,0 +1,26 @@
+﻿;----------------------------
+;  编辑框追加文本  By FeiYue
+;----------------------------
+
+AppendEdit(hEdit, text)
+{
+  text .= "`r`n"
+  SendMessage, 0xB1, -2, -1,, ahk_id %hEdit%   ; EM_SETSEL
+  SendMessage, 0xC2, 0, &text,, ahk_id %hEdit% ; EM_REPLACESEL
+  SendMessage, 0x115, 7, 0,, ahk_id %hEdit%    ; WM_VSCROLL
+}
+
+Gui, Font, s16
+Gui, Add, Edit, w500 r10 HwndhEdit
+Gui, Show
+AppendEdit(hEdit, "记录开始")
+Loop 20 {
+  AppendEdit(hEdit, A_Index)
+  Sleep, 100
+}
+AppendEdit(hEdit, "记录结束")
+return
+
+GuiClose:
+GuiEscape:
+ExitApp

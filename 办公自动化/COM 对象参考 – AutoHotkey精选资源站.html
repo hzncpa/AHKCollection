@@ -1,0 +1,678 @@
+<!DOCTYPE html><html lang="zh-CN" data-bs-theme="light" style="transform: none;" data-scrapbook-source="http://ahk66.giize.com:66/672" data-scrapbook-create="20240502013637375"><head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<link rel="profile" href="https://gmpg.org/xfn/11">
+	<title>COM 对象参考 – AutoHotkey精选资源站</title>
+<meta name="robots" content="max-image-preview:large">
+<meta name="keywords" content="v1代码,系统操控,脚本增强,">
+<meta name="description" content="jethro 的原始开篇文章： 目的：为常用的 COM 对象创建基本参考。 AutoHotkey 现在原生支持 COM（感谢 Lexikos、Sean 和 fincs&nbsp;）。这并没有消除COM 标准库，但它确实为 AutoHotkey 添加了">
+
+
+
+
+
+
+<link rel="canonical" href="http://ahk66.giize.com:66/672">
+<link rel="shortlink" href="http://ahk66.giize.com:66/?p=672">
+
+
+<link rel="apple-touch-icon" href="http://ahk66.giize.com:66/wp-content/uploads/c6312620e059e00.png">
+<meta name="msapplication-TileImage" content="http://ahk66.giize.com:66/wp-content/uploads/c6312620e059e00.png">
+<meta name="ljjc::status" content="on"></head><div style="display: block; opacity: 1; color-scheme: light;"></div>
+
+<body class="post-template-default single single-post postid-672 single-format-standard" style="transform: none;">
+
+
+<header class="site-header">
+
+    <div class="container"> <!-- container-fluid px-lg-5 -->
+	    <div class="navbar">
+	      <!-- logo -->
+	      <div class="logo-wrapper">
+<a rel="nofollow noopener noreferrer" href="http://ahk66.giize.com:66/"><img class="logo regular" data-light="http://ahk66.giize.com:66/wp-content/image/wwwLOGO.png" data-dark="http://ahk66.giize.com:66/wp-content/themes/ripro-v5/assets/img/logo-dark.png" src="data:image/png;filename=wwwLOGO.png;base64,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" alt="AutoHotkey精选资源站"></a></div>
+
+	      <div class="sep"></div>
+	      
+	      <nav class="main-menu d-none d-lg-block">
+	        <ul id="header-navbar" class="nav-list"><li class="menu-item"><a href="http://ahk66.giize.com:66/category/top"><i class="fas fa-heart me-1"></i>精选推荐</a></li>
+<li class="menu-item"><a href="http://ahk66.giize.com:66/category/key"><i class="fas fa-mouse me-1"></i>键鼠修改</a></li>
+<li class="menu-item"><a href="http://ahk66.giize.com:66/category/findtext"><i class="fas fa-gamepad me-1"></i>找图找色</a></li>
+<li class="menu-item"><a href="http://ahk66.giize.com:66/category/winget"><i class="fas fa-desktop me-1"></i>系统操控</a></li>
+<li class="menu-item"><a href="http://ahk66.giize.com:66/category/excel"><i class="fas fa-list-ol me-1"></i>自动办公</a></li>
+<li class="menu-item"><a href="https://wyagd001.github.io/zh-cn/docs/Tutorial.htm"><i class="fas fa-h-square me-1"></i>AHK帮助文档</a></li>
+</ul>	      </nav>
+	      
+	      <div class="actions">
+	        
+
+
+	<span class="action-btn toggle-search" rel="nofollow noopener noreferrer" title="站内搜索"><i class="fas fa-search"></i></span>
+
+
+
+
+
+	<a class="action-btn login-btn btn-sm btn" rel="nofollow noopener noreferrer" href="http://ahk66.giize.com:66/login?redirect_to=http%3A%2F%2Fahk66.giize.com%3A66%2F672"><i class="far fa-user me-1"></i></a>
+
+
+	        
+	      </div>
+
+	      	      <div class="navbar-search">
+<div class="search-form">
+    <form method="get" action="http://ahk66.giize.com:66/">
+        
+        <div class="search-fields">
+          <input type="text" class="" placeholder="轻松搜索 AutoHotkey 中文示例资源" autocomplete="off" value="" name="s" required="required" id="searchInputdb">
+          <button title="点击搜索" type="submit"><i class="fas fa-search"></i></button>
+      </div>
+  </form>
+</div>
+</div>
+		  	      
+	    </div>
+    </div>
+
+</header>
+
+<div class="header-gap"></div>
+
+
+<!-- **************** MAIN CONTENT START **************** -->
+<main style="transform: none;">
+	
+
+
+
+
+<div class="container mt-2 mt-sm-4" style="transform: none;">
+	<div class="row g-2 g-md-3 g-lg-4" style="transform: none;">
+
+		<div class="content-wrapper col-md-12 col-lg-9" data-sticky-content="">
+			<div class="card">
+
+									<div class="article-header">
+						<h1 class="post-title mb-2 mb-lg-3">COM 对象参考</h1>						<div class="article-meta">
+								<span class="meta-date"><i class="far fa-clock me-1"></i>2024-04-22</span>
+
+	<span class="meta-cat-dot"><i class="far fa-folder me-1"></i><a href="http://ahk66.giize.com:66/category/v1">v1代码</a> <a href="http://ahk66.giize.com:66/category/winget">系统操控</a></span>
+
+
+
+	<span class="meta-views"><i class="far fa-eye me-1"></i>2</span>
+
+	<span class="meta-comment"><a href="#comments"><i class="far fa-comments me-1"></i>0</a></span>
+
+	<span class="meta-edit"></span>
+						</div>
+					</div>
+				
+				
+				
+				
+<article class="post-content post-672 post type-post status-publish format-standard hentry category-v1 category-winget category-ahkex">
+	<p><strong class="text-strong">jethro 的</strong>原始开篇文章：</p>
+<p><strong class="text-strong">目的</strong>：为常用的 COM 对象创建基本参考。</p>
+<p>AutoHotkey 现在原生支持 COM（感谢 Lexikos、Sean 和 fincs&nbsp;）。这并没有消除<a class="postlink" href="http://www.autohotkey.com/forum/viewtopic.php?t=22923">COM 标准库</a>，但它确实为 AutoHotkey 添加了相当多的功能。但是，如果用户不知道或不理解任何 COM 对象，则这种本机 COM 支持的吸引力/用处就不那么大了。因此，我创建这个线程作为某种基本的 COM 对象引用。论坛成员可以添加一个 COM 对象“配置文件”，我会将其链接到原始帖子。也欢迎提问。以下是 COM obj 配置文件的建议 BBCode：</p>
+<p>&nbsp;</p>
+<p><span style="font-family: 'trebuchet ms', geneva, sans-serif; color: #ff0000;"><strong>以下仅是简介，详细代码在此链接里：</strong></span><a href="https://www.autohotkey.com/boards/viewtopic.php?f=6&amp;t=77">https://www.autohotkey.com/boards/viewtopic.php?f=6&amp;t=77</a></p>
+<p>&nbsp;</p>
+<div class="postbody">
+<div id="post_content396">
+<div class="content"><strong class="text-strong">COM 对象：</strong>&nbsp;Scripting.Dictionary<br>
+<strong class="text-strong">用途：</strong>存储数据键、项对的对象。<br>
+<strong class="text-strong">系统要求：</strong>一般<br>
+<strong class="text-strong">文档链接：</strong>&nbsp;<a class="postlink" href="http://msdn.microsoft.com/en-us/library/x4k5wbx4">字典对象</a><br>
+<strong class="text-strong">其他链接：</strong><br>
+<strong class="text-strong">基本代码示例：</strong></div>
+</div>
+</div>
+<p>&nbsp;</p>
+<p><strong class="text-strong">COM 对象</strong>：WinHttpRequest<br>
+<strong class="text-strong">目的：</strong>提供简单的 HTTP 客户端功能，允许比 UrlDownloadToFile 更多的控制。<br>
+<strong class="text-strong">系统要求：</strong>常规*<br>
+<strong class="text-strong">文档链接：</strong>&nbsp;<a class="postlink" href="http://msdn.microsoft.com/en-us/library/aa384106.aspx">http://msdn.microsoft.com/en-us/library/aa384106.aspx</a><br>
+<strong class="text-strong">基本代码示例：</strong></p>
+<p>&nbsp;</p>
+<p><strong class="text-strong">COM 对象</strong>：HTMLFile<br>
+<strong class="text-strong">用途：</strong>表示 HTML 文档。可用于读取、写入 HTML 并与之交互。<br>
+<strong class="text-strong">系统要求：</strong>一般<br>
+<strong class="text-strong">文档链接：</strong>&nbsp;<a class="postlink" href="http://msdn.microsoft.com/en-us/library/aa219325">文档</a><a class="postlink" href="http://msdn.microsoft.com/en-us/library/ms535862">对象</a><br>
+<strong class="text-strong">其他链接：</strong>&nbsp;<a class="postlink" href="http://www.w3schools.com/jsref/dom_obj_document.asp">W3Schools - 文档对象</a><br>
+<strong class="text-strong">基本代码示例</strong>- 此示例从 Google 搜索页面上的链接中提取所有文本和 URL：</p>
+<p>&nbsp;</p>
+<p><strong class="text-strong">COM 对象</strong>：GflAx<br>
+<strong class="text-strong">用途：</strong>轻松加载图像和照片的库。<br>
+<strong class="text-strong">文档链接：</strong>&nbsp;<a class="postlink" href="http://www.xnview.com/en/gfl.html">http://www.xnview.com/en/gfl.html</a>；方法和属性记录在安装程序附带的帮助文件中。<br>
+<strong class="text-strong">系统要求：</strong>&nbsp;<a class="postlink" href="http://www.xnview.com/en/download_gfl.html">GFLAx（ActiveX/ASP 组件）v2.80</a><br>
+<strong class="text-strong">基本代码示例：</strong></p>
+<p>&nbsp;</p>
+<p><strong class="text-strong">COM 对象</strong>：ScriptControl<br>
+<strong class="text-strong">用途：</strong>动态执行 VBScript 或 JScript<br>
+<strong class="text-strong">注意</strong>：许多 VBScript 和 JScript 脚本可以转换为 AHK，而不是使用 ScriptControl 对象。（请参阅最后一个示例）<br>
+<strong class="text-strong">系统要求：</strong>&nbsp;32 位 AHK（<a class="postlink" href="http://www.autohotkey.com/forum/topic61509.html&amp;p=419642#419642">请参阅此处</a>了解 64 位兼容性）<br>
+<strong class="text-strong">文档链接：</strong>&nbsp;<a class="postlink" href="http://msdn.microsoft.com/en-us/library/aa227633">使用 ScriptControl</a><br>
+<strong class="text-strong">代码示例：</strong></p>
+<p>&nbsp;</p>
+<p><strong class="text-strong">COM 对象：</strong>&nbsp;Microsoft Outlook<br>
+<strong class="text-strong">用途：</strong>从日历中读取和写入约会<br>
+<strong class="text-strong">系统要求：</strong>&nbsp;Microsoft Outlook：已使用 2010 和 2007 进行测试<br>
+<strong class="text-strong">文档：</strong>&nbsp;<a class="postlink" href="http://support.microsoft.com/kb/220595">http://support.microsoft.com/kb/220595</a><br>
+<strong class="text-strong">其他链接：以下是</strong><a class="postlink" href="http://www.autohotkey.com/forum/viewtopic.php?p=241103&amp;highlight=translate+using+com+library#241103">此</a>vb的翻译。净脚本。</p>
+<p>&nbsp;</p>
+<p><strong class="text-strong">COM 对象</strong>：Google 桌面<br>
+<strong class="text-strong">用途：</strong>手动为 google 桌面提供项目以进行索引<br>
+<strong class="text-strong">系统要求：</strong><a class="postlink" href="http://desktop.google.com/">Google 桌面</a><br>
+<strong class="text-strong">文档链接：</strong>&nbsp;<a class="postlink" href="http://code.google.com/apis/desktop/docs/indexapi.html">http://code.google.com/apis/desktop/docs/indexapi.html</a><br>
+<strong class="text-strong">其他链接：</strong>以下是翻译这个Python插件：<a class="postlink" href="http://goog-kongulo.sourceforge.net/">kongulo</a>。</p>
+<p>&nbsp;</p>
+<p><strong class="text-strong">COM 对象</strong>：InternetExplorer.Application<br>
+<strong class="text-strong">目的：</strong>探索网站<br>
+<strong class="text-strong">系统要求：</strong>一般<br>
+<strong class="text-strong">文档链接：</strong>&nbsp;<a class="postlink" href="http://msdn.microsoft.com/en-us/library/aa752043">开发人员参考</a><br>
+<strong class="text-strong">其他链接：</strong>&nbsp;<a class="postlink" href="http://msdn.microsoft.com/en-us/library/dd565688">NavConstants</a>、<a class="postlink" href="http://msdn.microsoft.com/en-us/library/ms691264">CMD ID</a>、<a class="postlink" href="http://www.autohotkey.com/forum/topic51020.html">基本网页控件</a><br>
+<strong class="text-strong">代码示例：</strong></p>
+<p>&nbsp;</p>
+<p><strong class="text-strong">COM 对象</strong>：Shell.Application<br>
+<strong class="text-strong">用途：</strong>访问资源管理器和 IE 窗口/选项卡；打开和操作 Windows<br>
+<strong class="text-strong">系统要求：</strong>一般<br>
+<strong class="text-strong">文档链接：</strong>&nbsp;<a class="postlink" href="http://msdn.microsoft.com/en-us/library/bb774094">Shell 对象</a><br>
+<strong class="text-strong">其他链接：</strong>&nbsp;<a class="postlink" href="http://msdn.microsoft.com/en-us/library/bb773974">ShellWindows 集合</a><br>
+<strong class="text-strong">代码示例：</strong><em class="text-italics">Windows 属性</em></p>
+<p>返回ShellWindows 集合，这对于访问 Explorer/IE Windows 非常有帮助。此示例枚举所有资源管理器和 IE 窗口/选项卡：</p>
+<p>&nbsp;</p>
+<p><strong class="text-strong">COM 对象：</strong>&nbsp;MSXML2.DOMDocument.6.0<br>
+<strong class="text-strong">用途：</strong>&nbsp;XML 解析器<br>
+<strong class="text-strong">系统要求：</strong>&nbsp;Windows XP SP3、Vista、7<br>
+<strong class="text-strong">文档链接：</strong>&nbsp;<a class="postlink" href="http://msdn.microsoft.com/en-us/library/ms756987.aspx">MSDN</a><br>
+<strong class="text-strong">其他链接： XML DOM</strong>&nbsp;<strong class="text-strong">基本代码示例</strong><a class="postlink" href="http://msdn.microsoft.com/en-us/library/aa468547.aspx">入门指南：</a></p>
+<p>&nbsp;</p>
+<p><strong class="text-strong">COM 对象</strong>：SAPI.SpVoice<br>
+<strong class="text-strong">用途：</strong>文本转语音<br>
+<strong class="text-strong">系统要求：</strong>一般<br>
+<strong class="text-strong">文档链接：</strong>&nbsp;<a class="postlink" href="http://msdn.microsoft.com/en-us/library/ms723602">SpVoice 接口</a><br>
+<strong class="text-strong">代码示例：</strong></p>
+<p>&nbsp;</p>
+<p><strong class="text-strong">COM 对象：</strong>&nbsp;ImageMagickObject COM+ 对象<br>
+<strong class="text-strong">用途：</strong>&nbsp;ImageMagick® 是一个用于创建、编辑和组合位图图像的软件套件。<br>
+<strong class="text-strong">系统要求：</strong>&nbsp;ImageMagickObject COM+ 对象<br>
+<strong class="text-strong">文档链接：</strong><br>
+<strong class="text-strong">其他链接：</strong>&nbsp;<a class="postlink" href="http://www.imagemagick.org/script/binary-releases.php#windows">http://www.imagemagick.org/script/binar ... hp#windows</a><br>
+<strong class="text-strong">基本代码示例：</strong></p>
+<p>&nbsp;</p>
+<p><strong class="text-strong">COM 对象</strong>：Word.Application<br>
+<strong class="text-strong">目的：</strong>创建和编辑各种文档<br>
+<strong class="text-strong">系统要求：</strong>&nbsp;Microsoft Office Word 应用程序<br>
+<strong class="text-strong">文档链接：</strong>&nbsp;<a class="postlink" href="http://msdn.microsoft.com/en-us/library/bb148369">http://msdn.microsoft.com/en-us/library/bb148369</a><br>
+<strong class="text-strong">其他链接：</strong><br>
+<strong class="text-strong">基本代码示例：</strong></p>
+<p>&nbsp;</p>
+<p><strong class="text-strong">COM 对象</strong>：Excel.Application<br>
+<strong class="text-strong">目的：</strong>执行计算、分析信息并可视化电子表格中的数据。<br>
+<strong class="text-strong">系统要求：</strong>&nbsp;Microsoft Office Excel 应用程序<br>
+<strong class="text-strong">文档链接：</strong>&nbsp;<a class="postlink" href="http://msdn.microsoft.com/en-us/library/bb149067">http://msdn.microsoft.com/en-us/library/bb149067</a><br>
+<strong class="text-strong">其他链接：</strong><br>
+<strong class="text-strong">基本代码示例：</strong></p>
+<p>&nbsp;</p>
+<p>可能需要编辑内容，我相信<em class="text-italics">While循环现在可以作为</em><em class="text-italics">For</em>循环</p>
+<p><strong class="text-strong">COM 对象</strong>完成：PowerPoint.Application<br>
+<strong class="text-strong">用途：</strong>创建 powerpoint 演示文稿<br>
+<strong class="text-strong">系统要求：</strong>&nbsp;Microsoft Office Powerpoint 应用程序，OS&gt;Win2000<br>
+<strong class="text-strong">文档链接：</strong><a class="postlink" href="http://msdn.microsoft.com/en-us/library/aa189759%28v%3Doffice.10%29.aspx">MSDN 文章</a>、<a class="postlink" href="http://msdn.microsoft.com/en-us/library/aa394585%28v%3DVS.85%29.aspx">&nbsp;WMI文章</a><br>
+<strong class="text-strong">其他链接：</strong><a class="postlink" href="http://msdn.microsoft.com/en-us/library/aa220907">应用程序对象</a><br>
+<strong class="text-strong">基本代码示例：</strong></p>
+<p>&nbsp;</p>
+<p><strong class="text-strong">COM 对象</strong>：XStandard.Zip<br>
+<strong class="text-strong">用途：</strong>具有多种功能的压缩和解压缩<br>
+<strong class="text-strong">系统要求：</strong>&nbsp;32 位操作系统、XZip.dll<br>
+<strong class="text-strong">文档链接：</strong>&nbsp;<a class="postlink" href="http://www.xstandard.com/en/documentation/xzip/">http://www.xstandard.com/en/documentation/xzip/</a><br>
+<strong class="text-strong">其他链接：</strong></p>
+<ul>
+<li>更多详细信息<a class="postlink" href="http://www.autohotkey.com/forum/viewtopic.php?t=66060">请参见此处（论坛帖子）</a></li>
+<li>官方<a class="postlink" href="http://www.xstandard.com/en/downloads/?product=zip">下载</a>Zip 组件 (138 Kb)</li>
+<li><a class="postlink" href="http://just-download.com/software-development/components-libraries/xzip-2.5.zip/2a6a9">镜像下载</a>位置（感谢 Jethro）</li>
+</ul>
+<p><strong class="text-strong">基本代码示例：</strong></p>
+<p><strong class="text-strong">如何存档（或压缩）多个文件</strong></p>
+<p>&nbsp;</p>
+<p><strong class="text-strong">COM 对象</strong>：Shell.Application<br>
+<strong class="text-strong">用途：</strong>检索文件属性。<br>
+<strong class="text-strong">系统要求：</strong>一般<br>
+<strong class="text-strong">文档链接：</strong>&nbsp;<a class="postlink" href="http://msdn.microsoft.com/en-us/library/bb787870">GetDetailsOf</a>、<a class="postlink" href="http://msdn.microsoft.com/en-us/library/bb787882">ParseName</a><br>
+<strong class="text-strong">其他链接：</strong>&nbsp;<a class="postlink" href="http://technet.microsoft.com/en-us/library/ee176615.aspx#mainSection">检索扩展文件属性</a><br>
+<strong class="text-strong">基本代码示例</strong>- 此示例演示如何检索指定文件的属性：</p>
+<p>&nbsp;</p>
+<p>前面的示例适用于扩展属性。这是针对一般属性的。</p>
+<p><strong class="text-strong">COM 对象</strong>：winmgmts<br>
+<strong class="text-strong">用途：</strong>检索文件和文件夹属性。<br>
+<strong class="text-strong">系统要求：</strong>一般<br>
+<strong class="text-strong">文档链接：</strong>&nbsp;<a class="postlink" href="http://technet.microsoft.com/en-us/library/ee176629.aspx">枚举文件夹和文件夹属性</a>、<a class="postlink" href="http://technet.microsoft.com/en-us/library/ee176591.aspx">枚举文件和文件属性</a><br>
+<strong class="text-strong">基本代码示例</strong>- 此示例演示如何检索指定文件和文件夹的属性：</p>
+
+	<div class="entry-copyright">
+	<i class="fas fa-info-circle me-1"></i>声明：站内资源为整理优化好的代码上传分享与学习研究，如果是开源代码基本都会标明出处，方便大家扩展学习路径。请不要恶意搬运，破坏站长辛苦整理维护的劳动成果。本站为爱好者分享站点，所有内容不作为商业行为。如若本站上传内容侵犯了原著者的合法权益，请联系我们进行删除下架。</div><div style="cy: initial; d: initial; dominant-baseline: initial; empty-cells: initial; fill: initial; fill-opacity: initial; fill-rule: initial; filter: initial; flex: initial; flex-flow: initial; float: initial; flood-color: initial; flood-opacity: initial; grid: initial; grid-area: initial; height: initial; hyphens: initial; image-orientation: initial; image-rendering: initial; inline-size: initial; inset-block: initial; inset-inline: initial; isolation: initial; letter-spacing: initial; lighting-color: initial; line-break: initial; list-style: initial; margin-block: initial; margin: 0px auto; margin-inline: initial; marker: initial; mask-type: initial; max-block-size: initial; max-height: initial; max-inline-size: initial; max-width: initial; min-block-size: initial; min-height: initial; min-inline-size: initial; min-width: initial; mix-blend-mode: initial; object-fit: initial; object-position: initial; offset: initial; opacity: initial; order: initial; orphans: initial; outline: initial; outline-offset: initial; overflow-anchor: initial; overflow-clip-margin: initial; overflow-wrap: initial; overflow: initial; overscroll-behavior-block: initial; overscroll-behavior-inline: initial; overscroll-behavior: initial; padding-block: initial; padding: initial; padding-inline: initial; page: initial; page-orientation: initial; paint-order: initial; perspective: initial; perspective-origin: initial; pointer-events: initial; position: initial; quotes: initial; r: initial; resize: initial; ruby-position: initial; rx: initial; ry: initial; scroll-behavior: initial; scroll-margin-block: initial; scroll-margin: initial; scroll-margin-inline: initial; scroll-padding-block: initial; scroll-padding: initial; scroll-padding-inline: initial; scroll-snap-align: initial; scroll-snap-stop: initial; scroll-snap-type: initial; scrollbar-gutter: initial; shape-image-threshold: initial; shape-margin: initial; shape-outside: initial; shape-rendering: initial; size: initial; speak: initial; stop-color: initial; stop-opacity: initial; stroke: initial; stroke-dasharray: initial; stroke-dashoffset: initial; stroke-linecap: initial; stroke-linejoin: initial; stroke-miterlimit: initial; stroke-opacity: initial; stroke-width: initial; tab-size: initial; table-layout: initial; text-align: initial; text-align-last: initial; text-anchor: initial; text-combine-upright: initial; text-decoration: initial; text-decoration-skip-ink: initial; text-indent: initial; text-overflow: initial; text-shadow: initial; text-size-adjust: initial; text-transform: initial; text-underline-offset: initial; text-underline-position: initial; touch-action: initial; transform: initial; transform-box: initial; transform-origin: initial; transform-style: initial; transition: initial; user-select: initial; vector-effect: initial; vertical-align: initial; visibility: initial; border-spacing: initial; -webkit-border-image: initial; -webkit-box-align: initial; -webkit-box-decoration-break: initial; -webkit-box-direction: initial; -webkit-box-flex: initial; -webkit-box-ordinal-group: initial; -webkit-box-orient: initial; -webkit-box-pack: initial; -webkit-box-reflect: initial; hyphenate-character: initial; -webkit-line-break: initial; -webkit-line-clamp: initial; -webkit-mask-box-image: initial; mask: initial; -webkit-perspective-origin-x: initial; -webkit-perspective-origin-y: initial; -webkit-print-color-adjust: initial; -webkit-rtl-ordering: initial; -webkit-ruby-position: initial; -webkit-tap-highlight-color: initial; -webkit-text-combine: initial; -webkit-text-decorations-in-effect: initial; text-emphasis: initial; text-emphasis-position: initial; -webkit-text-fill-color: initial; -webkit-text-security: initial; -webkit-text-stroke: initial; -webkit-transform-origin-x: initial; -webkit-transform-origin-y: initial; -webkit-transform-origin-z: initial; -webkit-user-drag: initial; -webkit-user-modify: initial; white-space: initial; widows: initial; width: initial; will-change: initial; word-break: initial; word-spacing: initial; x: initial; y: initial; z-index: 2147483647;"><p class="pagetual_loading_text" style="font-size: initial; text-indent: unset; display: block; position: initial; margin: auto auto 5px auto; shape-rendering: auto; vertical-align: middle; visibility: visible; width: initial; height: initial; text-align: center; color: #6e6e6e; flex: 0;display: inline-block;width: 100%;">少女祈祷中...</p><div class="pagetual_loading"><svg width="50" height="50" style="position:relative;cursor: pointer;width: 50px;height: 50px;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M296 440c-44.1 0-80 35.9-80 80s35.9 80 80 80 80-35.9 80-80-35.9-80-80-80z" style="fill: #6e6e6e;" fill="#6e6e6e"></path><path d="M960 512c0-247-201-448-448-448S64 265 64 512c0 1.8 0.1 3.5 0.1 5.3 0 0.9-0.1 1.8-0.1 2.7h0.2C68.5 763.3 267.7 960 512 960c236.2 0 430.1-183.7 446.7-415.7 0.1-0.8 0.1-1.6 0.2-2.3 0.4-4.6 0.5-9.3 0.7-13.9 0.1-2.7 0.4-5.3 0.4-8h-0.2c0-2.8 0.2-5.4 0.2-8.1z m-152 8c0 44.1-35.9 80-80 80s-80-35.9-80-80 35.9-80 80-80 80 35.9 80 80zM512 928C284.4 928 99 744.3 96.1 517.3 97.6 408.3 186.6 320 296 320c110.3 0 200 89.7 200 200 0 127.9 104.1 232 232 232 62.9 0 119.9-25.2 161.7-66-66 142.7-210.4 242-377.7 242z" style="fill: #6e6e6e;" fill="#6e6e6e"></path></svg></div></div>
+</article>
+
+
+
+
+<div class="entry-social">
+
+	<div class="row mt-2 mt-lg-3">
+		
+		<div class="col">
+						<a class="share-author" href="http://ahk66.giize.com:66/author/664e760d45b3ee3a">
+				<div class="avatar me-1"><img class="avatar-img rounded-circle border border-white border-3 shadow" src="data:image/jpeg;filename=avatar-a871e4db4c70cb59.jpg;base64,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" alt="">
+				</div>dbgba            </a>
+            		</div>
+
+		<div class="col-auto">
+			
+						<a class="btn btn-sm btn-info-soft post-share-btn" href="javascript:"><i class="fas fa-share-alt me-1"></i>分享</a>
+			
+						<a class="btn btn-sm btn-success-soft post-fav-btn" href="javascript:" data-is="1"><i class="far fa-star me-1"></i>收藏</a>
+			
+			
+		</div>
+	</div>
+
+</div>
+			</div>
+			
+			
+
+<div class="entry-navigation">
+    <div class="row g-3">
+                <div class="col-lg-6 col-12">
+            <a class="entry-page-prev" href="http://ahk66.giize.com:66/671" title="卸载 弹出 指定进程的Dll">
+                <div class="entry-page-icon"><i class="fas fa-arrow-left"></i></div>
+                <div class="entry-page-info">
+                    <span class="d-block rnav">上一篇</span>
+                    <div class="title">卸载 弹出 指定进程的Dll</div>
+                </div>
+            </a>
+        </div>
+                        <div class="col-lg-6 col-12">
+            <a class="entry-page-next" href="http://ahk66.giize.com:66/673" title="AHK进程管理工具">
+                <div class="entry-page-info">
+                    <span class="d-block rnav">下一篇</span>
+                    <div class="title">AHK进程管理工具</div>
+                </div>
+                <div class="entry-page-icon"><i class="fas fa-arrow-right"></i></div>
+            </a>
+        </div>
+            </div>
+</div>			
+			
+<div class="related-posts">
+   <h2 class="related-posts-title"><i class="fab fa-hive me-1"></i>相关文章</h2>
+   <div class="row g-2 g-md-3 row-cols-2 row-cols-md-3 row-cols-lg-4">
+    
+
+	<div class="col">
+		<article class="post-item item-grid">
+
+			<div class="tips-badge position-absolute top-0 start-0 z-1 m-2">
+				
+				
+			</div>
+			
+
+<div class="entry-media ratio ratio-21x9">
+	<a target="_blank" class="media-img lazy bg-cover bg-center" href="http://ahk66.giize.com:66/770" title="【v2】获取传入变量名" data-bg="http://ahk66.giize.com:66/wp-content/uploads/1-150x150.jpg">
+
+		
+		
+	</a>
+</div>			<div class="entry-wrapper">
+									<div class="entry-cat-dot"><a href="http://ahk66.giize.com:66/category/v2">v2代码</a> <a href="http://ahk66.giize.com:66/category/ahkex">脚本增强</a></div>
+				
+				<h2 class="entry-title">
+					<a target="_blank" href="http://ahk66.giize.com:66/770" title="【v2】获取传入变量名">【v2】获取传入变量名</a>
+				</h2>
+
+									<div class="entry-desc">#Requires AutoHotkey v2.0 ; a := "bl" ; ...</div>
+				
+				
+<div class="entry-meta">
+
+	
+	
+		<span class="meta-fav d-none d-md-inline-block"><i class="far fa-star me-1"></i>0</span>
+	
+		<span class="meta-views"><i class="far fa-eye me-1"></i>0</span>
+	
+	
+</div>			</div>
+		</article>
+	</div>
+
+
+
+	<div class="col">
+		<article class="post-item item-grid">
+
+			<div class="tips-badge position-absolute top-0 start-0 z-1 m-2">
+				
+				
+			</div>
+			
+
+<div class="entry-media ratio ratio-21x9">
+	<a target="_blank" class="media-img lazy bg-cover bg-center" href="http://ahk66.giize.com:66/652" title="监控窗口闪烁 By Tebayaki" data-bg="http://ahk66.giize.com:66/wp-content/uploads/3-150x150.jpg">
+
+		
+		
+	</a>
+</div>			<div class="entry-wrapper">
+									<div class="entry-cat-dot"><a href="http://ahk66.giize.com:66/category/v1">v1代码</a> <a href="http://ahk66.giize.com:66/category/v2">v2代码</a></div>
+				
+				<h2 class="entry-title">
+					<a target="_blank" href="http://ahk66.giize.com:66/652" title="监控窗口闪烁 By Tebayaki">监控窗口闪烁 By Tebayaki</a>
+				</h2>
+
+									<div class="entry-desc">V1代码： #Persistent hook := New ShellHook(...</div>
+				
+				
+<div class="entry-meta">
+
+	
+	
+		<span class="meta-fav d-none d-md-inline-block"><i class="far fa-star me-1"></i>0</span>
+	
+		<span class="meta-views"><i class="far fa-eye me-1"></i>1</span>
+	
+	
+</div>			</div>
+		</article>
+	</div>
+
+
+
+	<div class="col">
+		<article class="post-item item-grid">
+
+			<div class="tips-badge position-absolute top-0 start-0 z-1 m-2">
+				
+				
+			</div>
+			
+
+<div class="entry-media ratio ratio-21x9">
+	<a target="_blank" class="media-img lazy bg-cover bg-center" href="http://ahk66.giize.com:66/727" title="AHKv1和v2测速对比" data-bg="http://ahk66.giize.com:66/wp-content/uploads/8-150x150.jpg">
+
+		
+		
+	</a>
+</div>			<div class="entry-wrapper">
+									<div class="entry-cat-dot"><a href="http://ahk66.giize.com:66/category/v1">v1代码</a> <a href="http://ahk66.giize.com:66/category/v2">v2代码</a></div>
+				
+				<h2 class="entry-title">
+					<a target="_blank" href="http://ahk66.giize.com:66/727" title="AHKv1和v2测速对比">AHKv1和v2测速对比</a>
+				</h2>
+
+									<div class="entry-desc">V1和V2测速对比 By 虚荣.zip 蓝奏云：https://wwp.lanz...</div>
+				
+				
+<div class="entry-meta">
+
+	
+	
+		<span class="meta-fav d-none d-md-inline-block"><i class="far fa-star me-1"></i>0</span>
+	
+		<span class="meta-views"><i class="far fa-eye me-1"></i>2</span>
+	
+	
+</div>			</div>
+		</article>
+	</div>
+
+
+
+	<div class="col">
+		<article class="post-item item-grid">
+
+			<div class="tips-badge position-absolute top-0 start-0 z-1 m-2">
+				
+				
+			</div>
+			
+
+<div class="entry-media ratio ratio-21x9">
+	<a target="_blank" class="media-img lazy bg-cover bg-center" href="http://ahk66.giize.com:66/323" title="鼠标移动到文件上直接预览内容（支持文本和图片）" data-bg="http://ahk66.giize.com:66/wp-content/uploads/4-150x150.jpg">
+
+		
+		
+	</a>
+</div>			<div class="entry-wrapper">
+									<div class="entry-cat-dot"><a href="http://ahk66.giize.com:66/category/v1">v1代码</a> <a href="http://ahk66.giize.com:66/category/key">键鼠修改</a></div>
+				
+				<h2 class="entry-title">
+					<a target="_blank" href="http://ahk66.giize.com:66/323" title="鼠标移动到文件上直接预览内容（支持文本和图片）">鼠标移动到文件上直接预览内容（支持文本和图片）</a>
+				</h2>
+
+									<div class="entry-desc">By tuzi（空） 123网盘：https://www.123pan.com/...</div>
+				
+				
+<div class="entry-meta">
+
+	
+	
+		<span class="meta-fav d-none d-md-inline-block"><i class="far fa-star me-1"></i>0</span>
+	
+		<span class="meta-views"><i class="far fa-eye me-1"></i>2</span>
+	
+	
+</div>			</div>
+		</article>
+	</div>
+
+    </div>
+</div>
+
+			
+<div id="comments" class="entry-comments">
+	
+
+	<h2 class="comments-title"><i class="fas fa-comment-dots me-1"></i>评论(0)</h2>
+
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">提示：请文明发言 <small></small></h3><div class="d-flex align-content-center justify-content-center"><a rel="nofollow noopener noreferrer" href="http://ahk66.giize.com:66/login?redirect_to=http%3A%2F%2Fahk66.giize.com%3A66%2F672" class="login-btn btn btn-sm btn-dark px-4 rounded-pill mb-5"><i class="far fa-user me-1"></i>登录后评论</a></div>	</div><!-- #respond -->
+	
+
+
+	
+
+</div>
+
+		</div>
+
+		<div class="sidebar-wrapper col-md-12 col-lg-3 h-100" data-sticky="" style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
+			
+		<div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; top: 0px; left: 1173.33px;"><div class="sidebar">
+				<div id="ri_sidebar_author_widget-2" class="widget sidebar-author-info">
+
+<h5 class="widget-title">上传者</h5>
+
+
+
+<div class="author-header">
+  <div class="row align-items-center">
+    <div class="col-auto">
+      <!-- Avatar -->
+      <div class="avatar">
+        <img class="lazy avatar-img rounded-circle border border-white border-3 shadow entered loaded" data-src="//ahk66.giize.com:66/wp-content/uploads/1234/01/avatar-a871e4db4c70cb59.jpg" data-ll-status="loaded" src="data:image/jpeg;filename=avatar-a871e4db4c70cb59.jpg;base64,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">
+      </div>
+
+    </div>
+    <div class="col">
+      <span class="d-block h6 fw-bold mb-1">dbgba</span>
+      <small class="d-block text-muted">等级<span title="" class="badge bg-secondary text-secondary bg-opacity-10 ms-1 mb-0"><i class="far fa-gem me-1"></i>普通用户</span></small>
+    </div>
+  </div>
+</div>
+
+<div class="author-body">
+  <div class="row">
+    <div class="col-4 text-center">
+      <span class="h5 mb-0">535</span>
+      <span class="d-block text-sm">文章</span>
+    </div>
+    <div class="col-4 text-center">
+      <span class="h5 mb-0">2</span>
+      <span class="d-block text-sm">评论</span>
+    </div>
+    <div class="col-4 text-center">
+      <span class="h5 mb-0">6</span>
+      <span class="d-block text-sm">收藏</span>
+    </div>
+  </div>
+</div>
+
+<div class="author-footer">
+  <div class="text-center">
+    <a href="http://ahk66.giize.com:66/author/664e760d45b3ee3a" class="btn btn-sm px-0 btn-link">查看作者其他文章</a>
+  </div>
+</div></div><div id="categories-4" class="widget widget_categories"><h5 class="widget-title">精选更新</h5>
+			<ul>
+					<li class="cat-item cat-item-1"><a href="http://ahk66.giize.com:66/category/v1">v1代码</a> (481)
+</li>
+	<li class="cat-item cat-item-6"><a href="http://ahk66.giize.com:66/category/v2">v2代码</a> (70)
+</li>
+	<li class="cat-item cat-item-20"><a href="http://ahk66.giize.com:66/category/help">入门必备</a> (18)
+</li>
+	<li class="cat-item cat-item-18"><a href="http://ahk66.giize.com:66/category/other">其它相关</a> (21)
+</li>
+	<li class="cat-item cat-item-10"><a href="http://ahk66.giize.com:66/category/findtext">找图找色</a> (57)
+</li>
+	<li class="cat-item cat-item-12"><a href="http://ahk66.giize.com:66/category/substr">数据处理</a> (90)
+</li>
+	<li class="cat-item cat-item-8"><a href="http://ahk66.giize.com:66/category/gui">界面Gui</a> (9)
+</li>
+	<li class="cat-item cat-item-9"><a href="http://ahk66.giize.com:66/category/winexist">窗口控制</a> (6)
+</li>
+	<li class="cat-item cat-item-19"><a href="http://ahk66.giize.com:66/category/top">精选推荐</a> (14)
+</li>
+	<li class="cat-item cat-item-14"><a href="http://ahk66.giize.com:66/category/winget">系统操控</a> (211)
+</li>
+	<li class="cat-item cat-item-24"><a href="http://ahk66.giize.com:66/category/net">网络请求</a> (2)
+</li>
+	<li class="cat-item cat-item-23"><a href="http://ahk66.giize.com:66/category/ahkex">脚本增强</a> (113)
+</li>
+	<li class="cat-item cat-item-13"><a href="http://ahk66.giize.com:66/category/excel">自动办公</a> (12)
+</li>
+	<li class="cat-item cat-item-7"><a href="http://ahk66.giize.com:66/category/game">自动游戏</a> (39)
+</li>
+	<li class="cat-item cat-item-11"><a href="http://ahk66.giize.com:66/category/key">键鼠修改</a> (75)
+</li>
+			</ul>
+
+			</div><div id="ri_sidebar_ranking_widget-2" class="widget sidebar-ranking-list">
+<h5 class="widget-title">热门排行榜</h5>
+
+<div class="row g-3 row-cols-1">
+        <div class="col">
+        <article class="ranking-item">
+          <span class="ranking-num badge bg-primary bg-opacity-50">1</span>
+          <h3 class="ranking-title">
+            <a target="_blank" href="http://ahk66.giize.com:66/16" title="代码显示测试">代码显示测试</a>
+          </h3>
+        </article>
+      </div>
+          <div class="col">
+        <article class="ranking-item">
+          <span class="ranking-num badge bg-success bg-opacity-50">2</span>
+          <h3 class="ranking-title">
+            <a target="_blank" href="http://ahk66.giize.com:66/1" title="热键控制的进阶用法">热键控制的进阶用法</a>
+          </h3>
+        </article>
+      </div>
+          <div class="col">
+        <article class="ranking-item">
+          <span class="ranking-num badge bg-warning bg-opacity-50">3</span>
+          <h3 class="ranking-title">
+            <a target="_blank" href="http://ahk66.giize.com:66/230" title="AHK键盘鼠标操作录制器">AHK键盘鼠标操作录制器</a>
+          </h3>
+        </article>
+      </div>
+          <div class="col">
+        <article class="ranking-item">
+          <span class="ranking-num badge bg-info bg-opacity-50">4</span>
+          <h3 class="ranking-title">
+            <a target="_blank" href="http://ahk66.giize.com:66/175" title="上手AHK之前你所需要知道的事">上手AHK之前你所需要知道的事</a>
+          </h3>
+        </article>
+      </div>
+          <div class="col">
+        <article class="ranking-item">
+          <span class="ranking-num badge bg-secondary bg-opacity-50">5</span>
+          <h3 class="ranking-title">
+            <a target="_blank" href="http://ahk66.giize.com:66/619" title="全屏游戏中Gui置顶显示">全屏游戏中Gui置顶显示</a>
+          </h3>
+        </article>
+      </div>
+          <div class="col">
+        <article class="ranking-item">
+          <span class="ranking-num badge bg-secondary bg-opacity-50">6</span>
+          <h3 class="ranking-title">
+            <a target="_blank" href="http://ahk66.giize.com:66/327" title="AHK调用DD键鼠驱动完整示例">AHK调用DD键鼠驱动完整示例</a>
+          </h3>
+        </article>
+      </div>
+    </div>
+
+</div>			</div></div></div>
+
+	</div>
+</div>
+</main>
+
+<footer class="site-footer py-md-4 py-2 mt-2 mt-md-4">
+	<div class="container">
+				<div class="text-center small w-100">
+			<div>Copyright © 2024 <a target="_blank" href="http://autohotkey.com/">ahk66.com</a> - All rights reserved</div>
+			<div class=""><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer nofollow">京ICP备0000000号-1</a><a href="#" target="_blank" rel="noreferrer nofollow">京公网安备 00000000</a></div>
+		</div>
+					</div>
+</footer>
+
+	<div class="rollbar">
+		<ul class="actions">
+			<li><a target="_blank" href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&amp;k=Onl3MclqB-2oo_JOELc2qHGfrd_ApNyl&amp;authKey=8E%2BrcDyZw%2FxKNwzDhzTgFoMvmo20qAHfaaONB3XjC7LAoNEkOWJN0w9Hre1HXYE%2B&amp;noverify=0&amp;group_code=78818758" rel="nofollow noopener noreferrer"><i class="fab fa-qq"></i><span>Q群交流</span></a></li><li><a target="" href="http://ahk66.giize.com:66/aicode" rel="nofollow noopener noreferrer"><i class="fas fa-robot"></i><span>Ai＋服务</span></a></li><li><a target="" href="http://ahk66.giize.com:66/user/tougao/" rel="nofollow noopener noreferrer"><i class="fas fa-user-tie"></i><span>参与建设</span></a></li><li><a target="_blank" href="http://ahk66.giize.com:66/" rel="nofollow noopener noreferrer"><i class="fas fa-handshake"></i><span>开放问答</span></a></li>		</ul>
+	</div>
+<div class="back-top"><i class="fas fa-caret-up"></i></div>
+
+	
+
+
+
+<div class="off-canvas">
+  <div class="canvas-close"><i class="fas fa-times"></i></div>
+  
+  <!-- logo -->
+  <div class="logo-wrapper">
+<a rel="nofollow noopener noreferrer" href="http://ahk66.giize.com:66/"><img class="logo regular" data-light="http://ahk66.giize.com:66/wp-content/image/wwwLOGO.png" data-dark="http://ahk66.giize.com:66/wp-content/themes/ripro-v5/assets/img/logo-dark.png" src="data:image/png;filename=wwwLOGO.png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAACdBAMAAAD8slgiAAAAMFBMVEUAAADIyMiotaZ/lY3A5xdec4lMZX2c3A82UGdZuwQePFg+tQAXNFMSpQAFKk0AlQB7R8vtAAAADnRSTlMACB89U1t6iK3B1+Tq+U27aVgAAAmYSURBVHja7VtfaBzHGd9dRa77trvXU5Q8nc6qKysmyDlIVbWIuBSMCQFfSoIIQUgtfTHF1GrAhBKaO6MgRCJoYjDCBOMTNuIwgjQGE4IRuLiUIPQSQxKCEDhIHMcxr6kxx3Vmd/7/2ds9kjsK871obj/Pzm9/85tvvm927TjWBmm+hWXNmjVr1qxZs2bNmjVr1qz94OYeO2V2HhsbFKz8bqNg8uXWzL4fmawLAFR78EVWhKbwGcpXwyAojuHTBhc5i9LRQ3xRuDoKAGgapnEE+pLoGroNQOumPMb5nS9u12+xq95KfWVlEz/eyGq9Xt9cFHtM7+zsgNbOMtdnDQ4NNrQnJ7Evga5J5AfiGM5wdBEsCA8OHy8eYpb/QWS0FXdpTlGgE/EFHV3udHwLM10RbLAhXoxRgAq9MB8PUSCyoD/IOG8CbPQBcxhoTad37DPS5e1G/kOR6mfjXjckWC0jrPwugVUmQN/AFw7VWaS+A9PZ2BGgjkFmNj0sRha9SmZVmmzRd2iChacLnMsMq1XQjEMVTgkBD3wjWeA70yTOAllGPbDFxmmMKUAXzWRpfILiZWFOyheT2WLjVBWg6jy5M6DbHHr6Wc4GiyOrIC01HSG57mQNK1LtAZaGLErILZWQia5kUcVLms8ES0OWR7TRLBsCfCJZVPGS5hNhORKsnEIWI+RmAlnGoOW4FLmoeQXWBTMsNmGULMynlizqA2UjWVTxEvYssDRk5RPIGumuLNZf2jbTwCKLRCWLXdIQMtNdWZziAZjqDZankkVFrSEkyadRvKj5DLAmVLJGtMuou0+jeDG3McACKqxwTe0/o9MFtt8k+DSKF1lND4uSxeV/+g1N9G0kVSYcKiHOp4EVzainISuvjdCSL0HwguKFu2BY97vC0pBFOusSrUQfZXRWgFXpztaUBIuRxSKUO58whwk+veIB+Fd2WJTuFotQ7pZ5Dr0En17xArHyJLp6WOy5uBR0iC4hNzxWKhUDX01YGn4QlkqlMb+r4gXNY1gHJWRwpNKaFhYNQryCCYM19+ersPD4YuVVX/WFc6vwT315LEHx5xVmJ4HeRFhs19UEF1A+TkrHy74cvv9Ahrw5ZozxzQlF8+lgacnCORBoHqcSaVV9KXtYBebNnCjjMK/UIalgjV0AuuWO79rkhEvyG3dLveVl36D4DdJgd08F67g2KZKWtzDJnsalpGR5OncXZM2ngQXWtBuEt6XrWBErB97kOnKUjjUpaz4VLM64s4QhbceYrlGdq1XWKh5O3Yis+aywGn4XWHFC+KzWVdMq/gDeChP/qFdY3FIc1veMtpCTWpe4P3rsoIeuyZ5hMYEcAeaxn9f7zunyxEUu1hR6hcVEf9TQdUFKhvXKZENPce1zvcJitzbBqrGnl+3AUaNxxK6s+eyw6PbDw2qusHB+KMHaXNUWXVTx6H5Du2KcTw9rS669OFiNV4Nwmj99Yx2bfwzCF4mrNaVVvKp5DKtVx7ZjgtWYlpPmo2L8dqe5R2Id0S7pTvC6kxRf4UciyqWJDTpqh2QW1wywquGWNBNHpNXJZ37z4rTRnbuixvhygGxG1LycnerSwPj27LimIsetsnie8y4HqyalX2rBthLZmnjvNEkzXn95SfRDcpQcZbeelSIVYfJ+8kZPNW+qfCRYaC7oTLTO8SfqbPkMM0pmJcQExKMuGz155JSwqkIBWxNvfMNRKHlejibzMqy8PgJgzaeDFQuXFmUxB66kBwrrEduqDxwTrFGQsNOnhFXzdUdD8wZYNTbooQTrvqJ4fb6WChYppOmLlQcOnyaQSSSh+gZfj4kLvNZF8QRJKlgbypFkgZ+H79QASZYDCY9k/itdFE/UmCpAlJVD2opYooob2QJHxqIo8IUuiicPkgYWy2XEdw7016LI5RSnyngDIIfBbE+cMMGKOcgGi0X6Mo8jJv44/7yTQv6eW5MziDeNsKrZYbGivyakH5cDx83R8CGs/8Yp3w3fkBemUfE4pmSERW8XPTcrtt977fX3hf1jiL4N/c+fXltVagyj4rFSM8JimlhMrhT1dFRk1pdLpdLvS7H9GbBDvqywSOkUJ5U6heAgN2l2SXm8HPcXe4BFXwpH7/FHzJvtcGJBNq+p0PLcTGeFxZBUhXNeZaJ0s1jTVK5qFo3mITMsUfST5oJNjUwtWiaSBVHTvbpq9AJLFH1OEf0D9W0isX/7sozeFar/kywmZocliJ69y1PfSU2Yzwl0ihey2+yw2H49peHklu+Y6GJkEV6kM3suu80OiwXwisqJcLQ2smtynZSCvqj5G3QM+TsI/BZjXgfLE7JSd44XdVXz2Q9XMErzW9W/Ylika2JB6tHgU2r5/ciMICPvvPF41J1jfC3zLg99gFXflN+d5evksjuHWpwihqIey/gHbN5uyl8Teas7fCda5jeVQ1v3RYMrjGpW5ei5SL9xC0L5azfkChK+dsP/pBiw7xVfX4EPuXxK80VSbg4+5uZ7LwzkP+u5QTimPnxkgZYXa9asWbP2f2ZBkX6hjTYt3HZD3AiCgew/3pn19fXfxkOHZ2k7t76+hP6Ov73+1gBwuWf3O53ON0t8GyXVL8MGLN28Dzqdx6f7D+vp7Q6ybwpcG8Jxr8PGp45zAl34sP9kvdKJDQ7tvoPbH/mOhxA+LngIXefLvsN6ah9D+cpxfkbajwsxrM6HT0e/H/Yd1nNo2L1Op30FtyO7iGE9fmcwsNy/Iy1duoa0FbfX70U4Yljt/cHAQqM/WXJy15ZIO/gFhPJfP4aF7ctBSOshjAfjcCEOwfYdPxI+1DqE1Y4IGwRbP4GD/oNAxG0osSdTCNZnaArvbg+ArZ/CgV8iEQy3n4EUvYRg/ROK7ckL1wfAViKsT2AsvRMOAtbRKBowWBcFWN719kWv37BcrC20taAs4Snc/jWR/CfOibs+gnWnn7Hhd6djKN/D1Xf2dBwgYBvhILDc09HVfkr+xDYKoSgOfFT85fZVP9qd21eKZyOkMSwc2foIC4UnGA5QZG9/vh1N3ytRO46f3r32/iBgoeEe4sQFb9XPkHYb7on39vYGBet7GNrJJgMhxlkMtK99Dtb1vsOCDDkvU4Ic91e4DTdI9+O9vSj8I8V92l9toXiU+ziCcgfl62HcvouS5r/t7f2F5Bj9zE6f229HgXQcYmlfjc/vxq/td9p3o/aJe98W4hW7/6SfuXz49pVoXHf80tW38KmimztzCbe9M0v4k88zf+1r5UOP+vhK0KVttWHNmjVr1qxZs2bNmjVr1qxx9j84SvSdi7j3AAAAAABJRU5ErkJggg==" alt="AutoHotkey精选资源站"></a></div>
+
+  
+  
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body><div></div><div id="sc-translator-shadow" style="all: initial;"></div><div id="immersive-translate-popup" style="all: initial"></div></html><!--
+Performance optimized by Redis Object Cache. Learn more: https://wprediscache.com
+
+Retrieved 1395 objects (223 KB) from Redis using PhpRedis (v5.3.7).
+-->
